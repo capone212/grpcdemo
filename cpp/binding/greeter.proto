@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+option java_package = "io.grpc.examples";
+option objc_class_prefix = "HLW";
+
+package helloworld;
+
+// The greeting service definition.
+service Greeter 
+{
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest 
+{
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply 
+{
+  string message = 1;
+}
+
+service SourceEndpoint
+{
+	rpc RequestPackets(RequesArg) returns (stream MediaPacket) {}
+}
+
+message RequesArg
+{
+	uint32 count = 1;
+}
+
+message PacketHeader
+{
+	enum MediType
+	{
+		VIDEO = 0;
+		AUDIO = 1;
+		METADATA = 2;
+	}
+	MediType mediaType = 1;
+	string encoding = 2;
+}
+
+message MediaPacket
+{
+	PacketHeader header = 1;
+	string data = 2; 
+}
